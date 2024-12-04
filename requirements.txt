@@ -1,0 +1,8 @@
+streamlit
+requests
+sounddevice
+numpy
+wave
+tempfile
+huggingface_hub
+PIL

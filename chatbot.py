@@ -2,8 +2,8 @@ import streamlit as st
 from huggingface_hub import InferenceClient
 
 # Initialize Hugging Face Inference Client
-api_key = "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"  # Replace with your API key
-client = InferenceClient(api_key=api_key)
+api = "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"  # Replace with your API key
+client = InferenceClient(api_key=api)
 
 # Function for the bot page
 def bot_page():

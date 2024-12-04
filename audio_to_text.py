@@ -41,7 +41,7 @@ def audio_page():
     The **Whisper** model by **OpenAI** is a state-of-the-art speech recognition system. It is designed to transcribe audio into text with high accuracy, even for multiple languages, various accents, and background noise. 
     This model works by processing audio data through a deep learning algorithm that is trained on a vast dataset of diverse spoken language. It performs well in both noisy environments and with different languages, offering robust transcriptions.
 
-    In this app, you can either **record your voice** using the browser or **upload an audio file** to get a transcription in real-time.
+    In this app, you can upload an audio file to get a transcription in real-time.
     """)
 
     # Combined CSS with gradient and wave animation
@@ -64,14 +64,13 @@ def audio_page():
         unsafe_allow_html=True
     )
 
+    st.write("Upload an audio file below to get a transcription:")
 
-    st.write("Press the button below to start recording your voice or upload an audio file:")
-
-    # Option to upload audio file from local system
-    uploaded_file = st.file_uploader("Browse for file", type=["wav", "mp3", "flac"])
+    # Upload file section
+    uploaded_file = st.file_uploader("Upload an audio file", type=["wav", "mp3", "flac"])
 
     if uploaded_file is not None:
-        # If a file is uploaded, save it temporarily
+        # Save the uploaded file temporarily
         temp_uploaded_file = tempfile.NamedTemporaryFile(delete=False)
         with open(temp_uploaded_file.name, 'wb') as f:
             f.write(uploaded_file.getbuffer())
@@ -79,6 +78,7 @@ def audio_page():
         # Process the uploaded file
         st.write(f"Uploaded file: {uploaded_file.name}")
         st.audio(uploaded_file, format="audio/wav")  # Display the uploaded audio
+        st.write("Transcribing the uploaded audio...")
         result = query(temp_uploaded_file.name)
         
         # Display transcription
@@ -87,20 +87,5 @@ def audio_page():
             st.write(result['text'])
         else:
             st.write("Sorry, the transcription failed. Please try again.")
-
-    elif st.button("Record from browser"):
-        # If the user chooses to record audio, call the record_audio function
-        audio_file = record_audio()
-
-        # Display recorded audio and send it for transcription
-        with open(audio_file, 'rb') as f:
-            st.audio(f.read(), format='audio/wav')  # Play the recorded audio
-        st.write("Sending the audio to Whisper API for transcription...")
-        result = query(audio_file)
-
-        # Display the transcribed text
-        if 'text' in result:
-            st.subheader("Transcription:")
-            st.write(result['text'])
-        else:
-            st.write("Sorry, the transcription failed. Please try again.")
+    else:
+        st.info("Recording is disabled in this deployed version. Please upload an audio file.")

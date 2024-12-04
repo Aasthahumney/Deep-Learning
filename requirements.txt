@@ -3,6 +3,4 @@ requests>=2.31.0
 sounddevice>=0.4.6
 numpy>=1.23.0
 Pillow>=9.0.0
-wave  # No version required; part of Python standard library
-huggingface-hub>=0.18.0
-libportaudio2
+huggingface-hub==0.18.0

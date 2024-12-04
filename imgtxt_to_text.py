@@ -6,10 +6,10 @@ from io import BytesIO
 
 
 # Set your Hugging Face API key
-api_key = "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"
+api = "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"
 
 # Initialize the Hugging Face Inference client
-client = InferenceClient(api_key=api_key)
+client = InferenceClient(api_key=api)
 
 # Function for the vision page
 def vision_page():
